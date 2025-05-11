@@ -1,5 +1,8 @@
 # AI-discord-bot
-links LM studio to discord as a bot. Also removes <think> and </think> from LM studio.
+links LM studio to discord as a bot.
+
+# Features:
+- 
 
 # Step 1
 Download script: https://github.com/UnluckyMangooo/AI-discord-bot/blob/main/DiscordBotAI_V3
