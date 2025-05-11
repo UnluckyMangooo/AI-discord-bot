@@ -2,7 +2,10 @@
 links LM studio to discord as a bot.
 
 # Features:
-- 
+- Removes <think> and </think>
+- Can read images send to discord
+- Bypasses discord character limit
+- Has multiple prefixes
 
 # Step 1
 Download script: https://github.com/UnluckyMangooo/AI-discord-bot/blob/main/DiscordBotAI_V3
