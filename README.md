@@ -12,7 +12,7 @@ pip install discord.py
 pip install aiohttp
 
 # Step 4
-Put discord token in TOKEN 
+Put discord bot token in TOKEN 
 Put relay server and channel ID (if you have) in RELAY_GUILD_ID and RELAY_CHANNEL_ID
 
 # Step 5 (optional)
