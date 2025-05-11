@@ -2,7 +2,7 @@
 links LM studio to discord as a bot.
 
 # Features:
-- Removes <think> and </think>
+- Removes think and /think from AI response
 - Can read images send to discord
 - Bypasses discord character limit
 - Has multiple prefixes
