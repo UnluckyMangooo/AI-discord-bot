@@ -1,0 +1,84 @@
+import discord
+import aiohttp
+import json
+import re  
+
+TOKEN = "x"  # Replace with your bot's token
+API_URL = "http://localhost:1234/v1/chat/completions"  # LM Studio API
+
+RELAY_GUILD_ID = x  # Replace with the target server ID | to relay messages to private server
+RELAY_CHANNEL_ID = x  # Replace with the target channel ID
+
+# Discord bot setup
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
+
+# Store conversation history
+conversation_history = [] 
+PREFIXES = ["!", "!!"] #change bot prefix
+
+async def get_ai_response(user_input):
+    conversation_history.append({"role": "user", "content": user_input})
+    payload = {
+        "model": "PUT_YOUR_LM_STUDIO_LLM_IN_HERE",
+        "messages": conversation_history,
+    }
+    async with aiohttp.ClientSession() as session:
+        try:
+            async with session.post(API_URL, json=payload) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    ai_response = data["choices"][0]["message"]["content"].strip()
+                    if ai_response:
+                        # Remove all <think>...</think> content from AI's response
+                        ai_response = re.sub(r"<think>.*?<\/think>", "", ai_response, flags=re.DOTALL).strip()
+                        
+                        conversation_history.append({"role": "assistant", "content": ai_response})
+                        return ai_response
+                    else:
+                        return "Sorry, I didn't understand that. Could you rephrase?"
+                else:
+                    return f"Error: {response.status} - {await response.text()}"
+        except Exception as e:
+            return f"Error: {str(e)}"
+
+async def relay_message(message):
+    if message.author.bot or not any(message.content.startswith(prefix) for prefix in PREFIXES) and not message.reference:
+        return
+    
+    relay_guild = client.get_guild(RELAY_GUILD_ID)
+    if relay_guild:
+        relay_channel = relay_guild.get_channel(RELAY_CHANNEL_ID)
+        if relay_channel:
+            channel_mention = message.channel.mention if isinstance(message.channel, discord.TextChannel) else "Direct Message"
+            embed = discord.Embed(
+                title="Relayed Message",
+                description=f"**From:** {message.author.mention} in {channel_mention}\n\n**Message:**\n{message.content}",
+                color=discord.Color.blue()
+            )
+            await relay_channel.send(embed=embed)
+
+@client.event
+async def on_ready():
+    print(f'Logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    if message.author.bot:
+        return
+    
+    # Check if message starts with any of the valid prefixes
+    if any(message.content.startswith(prefix) for prefix in PREFIXES):
+        user_input = message.content[len(next(prefix for prefix in PREFIXES if message.content.startswith(prefix))):].strip()
+        ai_response = await get_ai_response(user_input)
+        
+        # Split AI response if it exceeds 2000 characters
+        response_chunks = [ai_response[i:i+2000] for i in range(0, len(ai_response), 2000)]
+        for chunk in response_chunks:
+            await message.channel.send(chunk)
+        
+        # Relay only AI responses or messages that start with PREFIXES
+        await relay_message(message)
+
+client.run(TOKEN)
