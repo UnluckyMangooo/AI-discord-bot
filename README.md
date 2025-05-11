@@ -8,7 +8,7 @@ links LM studio to discord as a bot.
 - Has multiple prefixes
 
 # Step 1
-Download script: https://github.com/UnluckyMangooo/AI-discord-bot/blob/main/DiscordBotAI_V3
+Download script: https://github.com/UnluckyMangooo/AI-discord-bot/blob/main/DiscordBotAI_V4.py
 
 # Step 2 
 Open in code editor
