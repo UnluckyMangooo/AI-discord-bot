@@ -10,16 +10,20 @@ links LM studio to discord as a bot.
 # Step 1
 - Download script: https://github.com/UnluckyMangooo/AI-discord-bot/blob/main/DiscordBotAI_V4.py
 
-# Step 2 
+# Step 2
+- Download LM studio: https://lmstudio.ai/
+
+
+# Step 
 - Open in code editor
 
-# Step 3
+# Step 
 - pip install discord.py
 - pip install aiohttp
 
-# Step 4
+# Step 
 - Put discord bot token in TOKEN 
 - Put relay server and channel ID (if you have) in RELAY_GUILD_ID and RELAY_CHANNEL_ID
 
-# Step 5 (optional)
+# Step  (optional)
 - Change prefix in PREFIXES
