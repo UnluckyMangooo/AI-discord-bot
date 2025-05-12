@@ -15,19 +15,19 @@ links LM studio to discord as a bot.
 - Search for an LLM, download it, and run it.
 - Once ran, copy the name of the LLM.
 
-# Step 
+# Step 3
 - Open script in code editor.
 
-# Step 
+# Step 4
 - pip install discord.py
 - pip install aiohttp
 
-# Step 
+# Step 5
 - Put discord bot token in TOKEN.
 - Put relay server and channel ID (if you have) in RELAY_GUILD_ID and RELAY_CHANNEL_ID.
 - Put copied LLM name in payload.
 
-# Step
+# Step 6
 - Run script, it should work.
 
 # Step  (optional)
